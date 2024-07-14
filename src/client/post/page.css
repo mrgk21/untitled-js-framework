@@ -1,0 +1,14 @@
+
+  p {
+    font-size: larger;
+    font-style: italic;
+  }
+  
+  button {
+    margin: 0.2rem;
+    padding: 0.5rem;
+    font-size: medium;
+    background-color: antiquewhite;
+    color: gray;
+    border-radius: 5px;
+  }

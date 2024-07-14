@@ -1,0 +1,22 @@
+{
+  "name": "untitled-js-framework",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "server:watch": "nodemon src/server/index.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0",
+    "@types/node": "^20.14.10",
+    "nodemon": "^3.1.4",
+    "vite": "^5.3.1"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "uuid": "^10.0.0"
+  }
+}
