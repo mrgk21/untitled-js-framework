@@ -3,40 +3,55 @@ import { readFile } from 'node:fs/promises';
 import fastify from 'fastify';
 
 import { buildHtmlTriplet, htmlContentWrapper } from './_utils/html.js';
+import {generateClientRoute } from "./_utils/router.js";
 import { srcDir } from '../config.js';
 
-const server = fastify();
+const index = await readFile(join(srcDir, "./index.html"));
+const server = fastify({ ignoreTrailingSlash: true, ignoreDuplicateSlashes: true });
 
-server.get('/error/404', async (req, reply) => {
-    return reply.code(200).send('Error 404, file not found');
-});
+function setRoutePlugin(tree) {
+      
+  const fn = async (f, options) => {
+      f.get(tree.path, async (req, reply) => {
+        let layout, page;
+        
+        if(tree.isLayoutHtml) {
+          layout = await buildHtmlTriplet(tree.path, 'layout');
+          layout = htmlContentWrapper(index, layout.data);
+          
+          if(tree.isPageHtml) {
+            page = await buildHtmlTriplet(tree.path, 'page');
+            layout = htmlContentWrapper(layout, page.data);
+          }
 
-server.get('/post', async (req, reply) => {
-    let index = await readFile(join(srcDir, "./index.html"));
-    let layout = await buildHtmlTriplet('/post', 'layout');
-    
-    if (layout.status) {
-        layout = layout.data;
-        let info = await buildHtmlTriplet('/post', 'page');
-        if (info.status) layout = htmlContentWrapper(layout, info.data);
-        index = htmlContentWrapper(index, layout);
+          return reply.code(200).headers({ 'content-type': 'text/html' }).send(layout);
+        }
+    });
+  };
 
-        return reply.code(200).headers({ 'content-type': 'text/html' }).send(index);
-    }
+  return fn;
+}
 
-    let info = await buildHtmlTriplet('/post');
-    if (!info.status) return reply.redirect('/error/404');
+function traverseTree(tree) {
 
-    index = htmlContentWrapper(index, info.data);
+  const fn = setRoutePlugin(tree);
+  server.register(fn);
 
-    return reply.code(200).headers({ 'content-type': 'text/html' }).send(index);
-});
+  for(const item of tree.children) {
+    traverseTree(item)
+  }
+}
 
-server.listen({ port: 3030 }, (err) => {
-    if (err) {
+generateClientRoute()
+  .then(traverseTree)
+  .then(() => {
+    server.listen({ port: 3030 }, (err) => {
+      if (err) {
         server.log.error(err);
         process.exit(1);
-    } else {
+      } else {
         console.log('server started on port 3030');
-    }
-});
+      }
+    });
+  })
+  .catch(console.log);

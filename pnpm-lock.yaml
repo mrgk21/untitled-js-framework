@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@types/node':
-        specifier: ^20.14.10
-        version: 20.14.10
       fastify:
         specifier: ^4.28.1
         version: 4.28.1
@@ -18,6 +15,9 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0
     devDependencies:
+      '@types/node':
+        specifier: ^20.14.10
+        version: 20.14.10
       '@types/uuid':
         specifier: ^10.0.0
         version: 10.0.0

@@ -32,7 +32,6 @@ function htmlContentWrapper(content, wrappedContent, identifier = '<filler />') 
       js: join(clientDir, path, `./${docType}.js`),
       css: join(clientDir, path, `./${docType}.css`)
   };
-  if (!(await checkFile(filePaths.html))) return { status: false, data: null };
 
   let html = await readFile(filePaths.html);
   const wrapperId = `_${generateId()}`;
