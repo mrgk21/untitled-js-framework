@@ -1,10 +1,8 @@
 import { readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { checkFile, generateId, sanitizedFilePath } from './common.js';
 import { cache } from './cache.js';
-
-const srcDir = join(dirname(fileURLToPath(import.meta.url)), '../..');
+import { clientDir } from '../../config.js';
 
 function cssIdWrapper(elemId, css) {
   return `#${elemId} { ${css} }`;
@@ -30,9 +28,9 @@ function htmlContentWrapper(content, wrappedContent, identifier = '<filler />') 
 
  async function buildHtmlTriplet(path, docType = 'page') {
   const filePaths = {
-      html: join(srcDir, path, `./${docType}.html`),
-      js: join(srcDir, path, `./${docType}.js`),
-      css: join(srcDir, path, `./${docType}.css`)
+      html: join(clientDir, path, `./${docType}.html`),
+      js: join(clientDir, path, `./${docType}.js`),
+      css: join(clientDir, path, `./${docType}.css`)
   };
   if (!(await checkFile(filePaths.html))) return { status: false, data: null };
 
