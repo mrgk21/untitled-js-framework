@@ -34,6 +34,8 @@ function htmlContentWrapper(content, wrappedContent, identifier = '<filler />') 
   };
 
   let html = await readFile(filePaths.html);
+
+   console.log(html);
   const wrapperId = `_${generateId()}`;
   html = htmlTagWrapper({ name: 'div', id: wrapperId }, html);
   cache.pageRootIds[sanitizedFilePath(`${path}_${docType}`)] = wrapperId;

@@ -12,6 +12,7 @@ const server = fastify({ ignoreTrailingSlash: true, ignoreDuplicateSlashes: true
 function setRoutePlugin(tree) {
       
   const fn = async (f, options) => {
+      console.log(tree);
       f.get(tree.path, async (req, reply) => {
         let layout, page;
         
@@ -24,8 +25,12 @@ function setRoutePlugin(tree) {
             layout = htmlContentWrapper(layout, page.data);
           }
 
-          return reply.code(200).headers({ 'content-type': 'text/html' }).send(layout);
+        } else {
+          if(tree.isPageHtml) {
+            layout = (await buildHtmlTriplet(tree.path, 'page')).data;  
+          }
         }
+        return reply.code(200).headers({ 'content-type': 'text/html' }).send(layout);
     });
   };
 
@@ -33,7 +38,6 @@ function setRoutePlugin(tree) {
 }
 
 function traverseTree(tree) {
-
   const fn = setRoutePlugin(tree);
   server.register(fn);
 

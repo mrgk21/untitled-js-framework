@@ -11,6 +11,9 @@ importers:
       fastify:
         specifier: ^4.28.1
         version: 4.28.1
+      signal-polyfill:
+        specifier: ^0.1.2
+        version: 0.1.2
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -566,6 +569,9 @@ packages:
   set-cookie-parser@2.6.0:
     resolution: {integrity: sha512-RVnVQxTXuerk653XfuliOxBP81Sf0+qfQE73LIYKcyMYHG94AuH0kgrQpRDuTZnSmjpysHmzxJXKNfa6PjFhyQ==}
 
+  signal-polyfill@0.1.2:
+    resolution: {integrity: sha512-HT9d+L9NMiTzMxb/tU2Baym6129ROyRETSjvchvSkQa7wN0+SrG/IUlsaBLqKn2c+4mlze6CgQBEvgBjxOpiaQ==}
+
   simple-update-notifier@2.0.0:
     resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
     engines: {node: '>=10'}
@@ -1118,6 +1124,8 @@ snapshots:
   semver@7.6.2: {}
 
   set-cookie-parser@2.6.0: {}
+
+  signal-polyfill@0.1.2: {}
 
   simple-update-notifier@2.0.0:
     dependencies:
