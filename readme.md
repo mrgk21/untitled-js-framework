@@ -5,7 +5,7 @@ This is an experimental SSR first library to render frontend html.
 - [ ] File router
     - [x] page(.html/.css/.js) to render pages
     - [x] layout(.html/.css/.js) to render pages which uses a special tag to wrap page files
-    - [ ] File nesting
+    - [x] File nesting
     - [ ] Single page layout and page files
     - [ ] global and per route error handling
     - [ ] special folders, like, [id], [[id]] 

@@ -1,0 +1,21 @@
+
+<script>
+  function helloLayout() {
+    console.log("hii from layout")
+  } 
+</script>
+
+
+  <div class="box">
+    <filler />
+    <filler />
+    <button type="button" onclick="helloLayout()">click me</button>
+    <button type="button" onclick="hello()">click me (should not work)</button>
+  </div>
+
+<style>
+  .box: {
+    display: "flex",
+    gap: "5rem"
+  }
+</style>

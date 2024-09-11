@@ -22,8 +22,8 @@ function htmlContentWrapper(content, wrappedContent, identifier = '<filler />') 
   const contentInd = Buffer.from(content).indexOf(identifier);
   if (contentInd === -1) return content;
 
-  console.log({ content });
-  return content.toString().replace(identifier, wrappedContent);
+  const _content = content.toString().replace(identifier, wrappedContent);
+  return htmlContentWrapper(_content, wrappedContent, identifier);
 }
 
  async function buildHtmlTriplet(path, docType = 'page') {
@@ -35,7 +35,6 @@ function htmlContentWrapper(content, wrappedContent, identifier = '<filler />') 
 
   let html = await readFile(filePaths.html);
 
-   console.log(html);
   const wrapperId = `_${generateId()}`;
   html = htmlTagWrapper({ name: 'div', id: wrapperId }, html);
   cache.pageRootIds[sanitizedFilePath(`${path}_${docType}`)] = wrapperId;
@@ -53,7 +52,17 @@ function htmlContentWrapper(content, wrappedContent, identifier = '<filler />') 
   return { status: true, data: html };
 }
 
+async function buildHtmlSingle(path, docType = 'page') {
+  const filePath = join(clientDir, path, `./${docType}.exp`);
+  const html = await readFile(filePath, {encoding: 'utf8'});
+
+  return {status: true, data: html};
+
+}
+
+
 export {
   htmlContentWrapper,
   buildHtmlTriplet,
+  buildHtmlSingle,
 }

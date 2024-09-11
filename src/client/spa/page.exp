@@ -1,0 +1,17 @@
+
+<script>
+  function hello() {
+    return 'hello world';
+  }
+</script>
+
+<div class="spa">
+  Hello guys
+  <button type="button" onclick="hello">Hmm click me!!</button>
+</div>
+
+<style>
+ .spa {
+   color: red;
+ }
+</style>

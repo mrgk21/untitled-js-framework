@@ -27,7 +27,7 @@ let tree = {
   
 
 function checkFileType(name, type) {
-  return name.startsWith(type) && name.endsWith('.html');
+  return name.startsWith(type) && name.endsWith('.exp');
 }
 
 function checkFolderType(name) {
@@ -38,14 +38,13 @@ function checkFolderType(name) {
 
 export async function generateClientRoute() {
   // pass 1
-  const newTree = await createRouterTree(clientDir);
-  
+  const newTree = await createRouterTree(clientDir, {name: 'root', path: '/'});
   // pass 2
   
   return newTree;
 }
 
-async function createRouterTree(dir, treeRef = {name: 'root', path: '/'}) {
+async function createRouterTree(dir, treeRef) {
   const directory = await readdir(dir, {recursive: false, withFileTypes: true});
 
   const dirs = [];
@@ -57,8 +56,7 @@ async function createRouterTree(dir, treeRef = {name: 'root', path: '/'}) {
 
     treeRef.isPageHtml = (treeRef.isPageHtml ?? false) || checkFileType(item.name, 'page');
     treeRef.isLayoutHtml = (treeRef.isLayoutHtml ?? false) || checkFileType(item.name, 'layout');
-
-  } 
+  }
 
   treeRef.children = [];
 
